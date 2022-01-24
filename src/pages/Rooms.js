@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import RoomsContainer from '../components/container/RoomsContainer';
 
-import Headre from '../components/room/Headre';
+import RoomsContainer from '../components/rooms/RoomsContainer';
+import Header from '../components/rooms/Header';
 
-const Rooms = ({ navigation }) => {
+const Rooms = () => {
   return (
     <View style={styles.container}>
-      <Headre />
+      <Header />
       <RoomsContainer />
     </View>
   )

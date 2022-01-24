@@ -1,10 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const Chat = () => {
+const Chat = ({ route, navigation }) => {
+
+  const { id } = route.params;
+  console.log(id)
   return (
     < View>
-      <Text>helldosdds</Text>
+      <Text>hellasssssssssdosdds</Text>
     </ View>
   )
 };

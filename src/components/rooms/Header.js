@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Svg, { Path, Circle} from 'react-native-svg';
 
-const Headre = () => {
+const Header = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Rooms</Text>
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Headre;
+export default Header;
