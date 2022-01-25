@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import Svg, { Path} from 'react-native-svg';
 
+import * as ROUTS from '../../constans/routs'
+
 import { useNavigation } from '@react-navigation/native';
 
 const FormPanel = () => {
@@ -42,7 +44,7 @@ const FormPanel = () => {
   }, [isErrorEmial])
 
   const handleOnSubmit = () => {
-    navigation.navigate('Login')
+    navigation.navigate(ROUTS.LOGIN)
   }
 
   return (
@@ -130,7 +132,7 @@ const FormPanel = () => {
         </View>
       </View>
       <TouchableOpacity style={styles.button} onPress={handleOnSubmit}>
-        <Text style={styles.buttonText}>Log in</Text>
+        <Text style={styles.buttonText}>Sign up</Text>
       </TouchableOpacity>
     </View>
   )

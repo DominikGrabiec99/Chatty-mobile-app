@@ -10,6 +10,8 @@ import AppLoading from 'expo-app-loading';
 import { ApolloClient, InMemoryCache, ApolloProvider,} from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
 
+import * as ROUTS from './src/constans/routs'
+
 import Rooms from "./src/pages/Rooms";
 import Login from './src/pages/Login';
 import Signup from './src/pages/Signup';
@@ -52,10 +54,10 @@ function App() {
           <Stack.Navigator screenOptions={{
             headerShown: false
           }}>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Rooms" component={Rooms} />
-            <Stack.Screen name="Registration" component={Signup} />
-            <Stack.Screen name="Chat" component={Chat} />
+            <Stack.Screen name={ROUTS.LOGIN} component={Login} />
+            <Stack.Screen name={ROUTS.ROOMS} component={Rooms} />
+            <Stack.Screen name={ROUTS.REGISTRATION} component={Signup} />
+            <Stack.Screen name={ROUTS.CHAT} component={Chat} />
           </Stack.Navigator>
         </NavigationContainer>
       </ApolloProvider>

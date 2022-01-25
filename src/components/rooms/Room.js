@@ -5,6 +5,8 @@ import { GET_ROOMS_BY_ID } from '../../GraphQL/Queries';
 import Svg, { Path, Circle, G, Mask} from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
 
+import * as ROUTS from '../../constans/routs'
+
 import Loader from '../Loader';
 
 const Room = ({ id }) => {
@@ -58,7 +60,7 @@ const Room = ({ id }) => {
   }
 
   return (
-  <TouchableOpacity style={styles.wrapperRoom} onPress={() => navigation.navigate('Chat', {id: id})}>
+  <TouchableOpacity style={styles.wrapperRoom} onPress={() => navigation.navigate(ROUTS.CHAT, {id: id})}>
     <View>
       <Svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <Circle cx="32" cy="32" r="32" fill="#E9EAEE"/>

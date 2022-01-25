@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import * as ROUTS from '../../constans/routs'
+
 const SignUpNav = () => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.wrapper}>
         <Text style={styles.text}>Don't have any account?</Text>
-        <Text onPress={() => navigation.navigate('Registration')} style={styles.textNav}>  Sign up</Text>
+        <Text onPress={() => navigation.navigate(ROUTS.REGISTRATION)} style={styles.textNav}>  Sign up</Text>
     </View>
   )
 };

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import Svg, { Path} from 'react-native-svg';
 
+import * as ROUTS from '../../constans/routs'
+
 import { useNavigation } from '@react-navigation/native';
 
 const FormPanel = () => {
@@ -31,7 +33,7 @@ const FormPanel = () => {
   }, [email])
 
   const handleOnSubmit = () => {
-    navigation.navigate('Rooms')
+    navigation.navigate(ROUTS.ROOMS)
   }
 
   return (

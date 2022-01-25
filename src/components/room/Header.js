@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Svg, { Path, Circle, Mask, G} from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
 
+import * as ROUTS from '../../constans/routs'
+
 
 const Header = ({userName}) => {
   const navigation = useNavigation(); 
@@ -11,7 +13,7 @@ const Header = ({userName}) => {
     <View style={styles.container}>
       <View style={styles.headerTextBox}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Rooms')}
+          onPress={() => navigation.navigate(ROUTS.ROOMS)}
           style={styles.button}
         >
           <Svg width="24" height="24" style={styles.svgArrow} viewBox="0 0 44 44" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" class="svg-inline--fa fa-chevron-left fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
