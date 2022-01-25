@@ -7,7 +7,7 @@ import splitLink from './src/helpers/splitLink';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
-import { ApolloClient, createHttpLink, InMemoryCache, ApolloProvider,} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider,} from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
 
 import Rooms from "./src/pages/Rooms";
@@ -17,9 +17,6 @@ import Chat from './src/pages/Chat';
 
 const Stack = createNativeStackNavigator();
 
-// const httpLink = createHttpLink({
-//   uri: 'https://chat.thewidlarzgroup.com/api/graphiql',
-// });
 
 const authLink = setContext((_, { headers }) => {
   // const token = AsyncStorage.getItem('token');
@@ -42,6 +39,8 @@ function App() {
   const [fontsLoaded] = useFonts({
     'poppins-regular': require('./assets/fonts/Poppins-Regular.ttf'),
     'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
+    'poppies-midium': require('./assets/fonts/Poppins-Medium.ttf'),
+    'poppies-semiBold': require('./assets/fonts/Poppins-SemiBold.ttf')
     // 'sF-Compact-Display-medium':  require('./assets/fonts/sf-compact-display-medium-5864711817c30.ttf'),
     // 'sF-Compact-Display-thin':  require('./assets/fonts/sf-compact-display-thin-58646eb43a785.ttf')
   });
@@ -53,8 +52,8 @@ function App() {
           <Stack.Navigator screenOptions={{
             headerShown: false
           }}>
-            <Stack.Screen name="Rooms" component={Rooms} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Rooms" component={Rooms} />
             <Stack.Screen name="Registration" component={Signup} />
             <Stack.Screen name="Chat" component={Chat} />
           </Stack.Navigator>

@@ -11,7 +11,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      authToken: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJjaGF0bHkiLCJleHAiOjE2NDM4MDExNjcsImlhdCI6MTY0MTM4MTk2NywiaXNzIjoiY2hhdGx5IiwianRpIjoiN2MzNjFlY2UtM2ZlNC00NDU2LWJhMWUtOWQyMWQwOTI1ZjIzIiwibmJmIjoxNjQxMzgxOTY2LCJzdWIiOiIwNGJmODU1MS1lNjg3LTQ5YTUtYWZjYS0zMWViMmE1YTEyYzkiLCJ0eXAiOiJhY2Nlc3MifQ.Hvzck-vXPCfRB7G2fM9oelBXrWXhPSGw4Mo64WVZZYMxEMZwpVclrZb5qBZp75tr9LS-YjtaIsKoow7i8Pj5bA'
+      Authorization: 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJjaGF0bHkiLCJleHAiOjE2NDM4MDExNjcsImlhdCI6MTY0MTM4MTk2NywiaXNzIjoiY2hhdGx5IiwianRpIjoiN2MzNjFlY2UtM2ZlNC00NDU2LWJhMWUtOWQyMWQwOTI1ZjIzIiwibmJmIjoxNjQxMzgxOTY2LCJzdWIiOiIwNGJmODU1MS1lNjg3LTQ5YTUtYWZjYS0zMWViMmE1YTEyYzkiLCJ0eXAiOiJhY2Nlc3MifQ.Hvzck-vXPCfRB7G2fM9oelBXrWXhPSGw4Mo64WVZZYMxEMZwpVclrZb5qBZp75tr9LS-YjtaIsKoow7i8Pj5bA'
     },
   }
 });

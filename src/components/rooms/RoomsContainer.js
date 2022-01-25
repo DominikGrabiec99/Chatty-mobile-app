@@ -19,7 +19,11 @@ const RoomsContainer = () => {
 
   if(error){
     return(
-      <View>wystąpił błąd</View>
+      <View style={styles.infoMessage}>
+        <Text style={styles.textInfoMessage}>
+          An error has occurred with the database
+        </Text>
+        </View>
     )
   }
   
@@ -27,10 +31,12 @@ const RoomsContainer = () => {
     return <Loader />
   }
 
-  if(userRooms.length === 0 && !loading) {
+  if(!data && userRooms.length === 0 && !loading) {
     return(
-      <View>
-        <Text>nie ma</Text>
+      <View style={styles.infoMessage}>
+        <Text style={styles.textInfoMessage}>
+          You don't have any room yet
+        </Text>
       </View>
     )
   }
@@ -46,6 +52,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F0F8FF'
+  },
+  infoMessage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textInfoMessage: {
+    fontSize: 22,
+    color: '#5603AD',
+    fontFamily: 'poppins-regular'
   }
 })
 

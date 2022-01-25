@@ -5,6 +5,8 @@ import { GET_ROOMS_BY_ID } from '../../GraphQL/Queries';
 import Svg, { Path, Circle, G, Mask} from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
 
+import Loader from '../Loader';
+
 const Room = ({ id }) => {
   const [room, setRoom] = useState({})
   const navigation = useNavigation();
@@ -19,8 +21,14 @@ const Room = ({ id }) => {
     }
   }, [data])
 
-  if(!data) {
-    return <View></View>
+  if(loading) {
+    return <Loader />
+  }
+
+  if(!data && !loading) {
+    return <View>
+      <Text>You don't have any room yet</Text>
+    </View>
   }
 
   const createTime = () => {
@@ -30,7 +38,7 @@ const Room = ({ id }) => {
 
     const timeMess = (now.getTime()- time.getTime()) / (1000)
 
-    if(timeMess < 15){
+    if(timeMess < 3){
       return 'now'
     } else if(timeMess < 60) {
       return `${timeMess} s ago`
@@ -90,12 +98,18 @@ const styles = StyleSheet.create({
   },
   name: {
     marginBottom: 4,
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: 0.01,
     fontWeight: '700',
     fontFamily: 'poppins-regular'
   },
+  message: {
+    fontSize: 14,
+  },
   messNow: {
-    height: 5,
-    width: 5,
+    height: 10,
+    width: 10,
     borderRadius: 5,
     backgroundColor: '#A8FF76'
   },
@@ -106,7 +120,7 @@ const styles = StyleSheet.create({
     color: 'grey'
   },
   time: {
-    color: '#bfc1cc'
+    color: '#9FA2B2'
   }
 })
 

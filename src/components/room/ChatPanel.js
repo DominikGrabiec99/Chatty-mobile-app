@@ -8,6 +8,8 @@ import {  MESSAGE_ADDED } from '../../GraphQL/Subscription';
 import renderInputToolbar from './renderInputToolbar';
 import renderBubble from './renderBubble';
 import renderSend from './renderSend';
+import renderTime from './renderTime';
+import renderDay from './renderDay';
 
 const ChatPanel = ({ allMessages, id, user }) => {
   const [messages, setMessages] = useState([]);
@@ -16,20 +18,15 @@ const ChatPanel = ({ allMessages, id, user }) => {
 
   const { error: errorSub, data, loading } = useSubscription(
     MESSAGE_ADDED,
-    { variables: { roomId: id } 
-      // onSubscriptionData: (data) => {
-      //   const message = data.subscriptionData.data.messageCreated
-      //   console.log('Message recive', message)
-      // }
+    { variables: { roomId: id },
+      onSubscriptionData: (data) => {
+        const message = data.subscriptionData.data.messageCreated
+      }
     }
   )
 
-  useEffect(() => {
-    console.log(data, loading, errorSub)
-  }, [data, loading, errorSub])
 
   useEffect(() => {
-
     setMessages(allMessages.map(({id, body, insertedAt, user }) => ({
       _id: id,
       text: body, 
@@ -63,7 +60,10 @@ const ChatPanel = ({ allMessages, id, user }) => {
       renderBubble={renderBubble}
       alwaysShowSend
       renderSend={renderSend}
-      minInputToolbarHeight={80}
+      minInputToolbarHeight={74}
+      isTyping={true}
+      renderDay={renderDay}
+      renderTime={renderTime}
       user={{
         _id: user.id,
         name: `${user.firstName} ${user.lastName}`

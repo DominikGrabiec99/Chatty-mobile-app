@@ -1,5 +1,5 @@
-import { Composer, InputToolbar  } from 'react-native-gifted-chat';
-import { StyleSheet } from 'react-native';
+import { Composer, InputToolbar} from 'react-native-gifted-chat';
+import { StyleSheet, TextInput } from 'react-native';
 
 const renderInputToolbar = props => {
   return (
@@ -16,16 +16,16 @@ const renderInputToolbar = props => {
         paddingHorizontal: 10
       }}
       placeholder=""
-      renderComposer={props1 => (<Composer {...props1} textInputStyle={{
+      renderComposer={props => (
+      <Composer {...props} textInputStyle={{
         color: '#1A1A1A', 
         backgroundColor: '#FFFFFF',
         borderRadius: 12,
         borderBottomRightRadius: 0,
         width: 30,
         padding: 10
-      }}
-      />)}
-      // renderAccessory={props2 => (<Accesory {...props1} style={{backgroundColor: 'red', width: 20, height: 10}}/>)}
+      }}/>
+      )}
     />
   );
 };

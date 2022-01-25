@@ -1,12 +1,27 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
+import Header from '../components/login/Header';
+import InformationText from '../components/login/InformationText';
+import FormPanel from '../components/login/FormPanel';
+import SignUpNav from '../components/login/SignUpNav';
 
 const Login = () => {
     return (
-    < View>
-      <Text>helldosdds</Text>
+    <View style={styles.container}>
+      <Header />
+      <InformationText />
+      <FormPanel />
+      <SignUpNav />
     </ View>
   )
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#b6defd',
+    padding: 15
+  }
+})
 
 export default Login;
