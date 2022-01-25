@@ -68,9 +68,7 @@ const Room = ({ id }) => {
       <Text numberOfLines={1} style={styles.message}>{room.message}</Text>
     </View>
     <View style={styles.timeBox}>
-      { createTime() === 'now' ? <View style={styles.messNow}></View>: <Text style={styles.time}>{createTime()}</Text>
-      }
-      
+      { createTime() === 'now' ? <View style={styles.messNow}></View>: <Text style={styles.time}>{createTime()}</Text>} 
     </View>
   </TouchableOpacity>
   )
@@ -82,7 +80,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     backgroundColor: '#ffffff',
     borderRadius: 12,
-    marginTop: 15,
+    marginTop: 10,
     fontFamily: '',
     padding: 10,
     alignItems: 'center'

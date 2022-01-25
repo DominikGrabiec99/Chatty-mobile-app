@@ -25,7 +25,7 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   container: {
-     flexDirection: 'row',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignContent: 'flex-end',
     padding: 10,
@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#b6defd',
     borderRadius: 24,
     borderTopEndRadius: 0,
-    borderTopStartRadius: 0
+    borderTopStartRadius: 0,
+    marginBottom: 20
   },
   text: {
     fontSize: 36,
