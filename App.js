@@ -32,8 +32,6 @@ function App() {
     'poppins-bold': require('./assets/fonts/Poppins-Bold.ttf'),
     'poppies-midium': require('./assets/fonts/Poppins-Medium.ttf'),
     'poppies-semiBold': require('./assets/fonts/Poppins-SemiBold.ttf')
-    // 'sF-Compact-Display-medium':  require('./assets/fonts/sf-compact-display-medium-5864711817c30.ttf'),
-    // 'sF-Compact-Display-thin':  require('./assets/fonts/sf-compact-display-thin-58646eb43a785.ttf')
   });
 
   if (fontsLoaded) {

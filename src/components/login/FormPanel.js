@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-
+import { useMutation } from '@apollo/client';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+import * as SecureStore from 'expo-secure-store';
+
+import { LOGIN } from "../../GraphQL/Mutations";
 
 import * as ROUTS from '../../constans/routs'
 
@@ -22,6 +26,8 @@ const FormPanel = () => {
 
   const navigation = useNavigation();
 
+  const [loginSend, { error: loginError, data: dataLogin }] = useMutation(LOGIN)
+
   useEffect(() => {
     setIsFocusedEmail(false)
     setIsFocusedPass(false)
@@ -36,8 +42,25 @@ const FormPanel = () => {
     }
   }, [email])
 
-  const handleOnSubmit = () => {
-    navigation.navigate(ROUTS.ROOMS)
+  const handleOnSubmit = async () => {
+    
+    if(email.length === 0 || password.length === 0) {
+      return null
+    }
+
+    await loginSend({
+      variables: {
+        email,
+        password
+      },
+      fetchPolicy: 'no-cache'
+    }).then( async (data) => {
+      await SecureStore.setItemAsync('secure_token', data.data.loginUser.token);
+      navigation.navigate(ROUTS.ROOMS)
+    }).catch((e) => {
+      //message
+      console.log(e)
+    })
   }
 
   return (

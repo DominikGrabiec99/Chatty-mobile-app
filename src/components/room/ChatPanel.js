@@ -48,7 +48,8 @@ const ChatPanel = ({ allMessages, id, user, isFocus, setIsFocus }) => {
       variables: {
         body: messages[0].text,
         roomId: id
-      }
+      },
+      fetchPolicy: 'no-cache'
     })
 
     if(error) {

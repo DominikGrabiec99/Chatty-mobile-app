@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { useQuery} from '@apollo/client';
-import { GET_ROOMS_BY_ID } from '../../GraphQL/Queries';
-import Svg, { Path, Circle, G, Mask} from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery, useSubscription } from '@apollo/client';
+import Svg, { Path, Circle, G, Mask} from 'react-native-svg';
+
+import { GET_ROOMS_BY_ID } from '../../GraphQL/Queries';
+import { MESSAGE_ADDED } from '../../GraphQL/Subscription'
 
 import * as ROUTS from '../../constans/routs'
 
@@ -18,6 +20,10 @@ const Room = ({ id }) => {
     variables:{id},
     fetchPolicy: 'no-cache'
   })
+
+  const {  data: dataSub, loading: loadingSub, error: errorSub } = useSubscription(MESSAGE_ADDED, {
+    variables: { roomId: id }
+  });
 
   const createTime = () => {
     if(!room.time) return
@@ -59,6 +65,12 @@ const Room = ({ id }) => {
       setRoom({name: data.room.name, time: data.room.messages[0].insertedAt, message: data.room.messages[0].body})
     }
   }, [data])
+
+  useEffect(() => {
+    if(data && dataSub) {
+      setRoom({name: data.room.name, time: dataSub.messageAdded.insertedAt, message: dataSub.messageAdded.body})
+    }
+  }, [dataSub])
 
   useEffect(()=> {
     setTime(createTime())

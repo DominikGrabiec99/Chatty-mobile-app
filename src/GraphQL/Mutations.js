@@ -27,3 +27,18 @@ export const SEND_TYPING =gql`
     }
   }
 `
+
+export const LOGIN =gql`
+  mutation typingUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      token,
+      user {
+    	  email,
+        firstName,
+        id,
+        lastName,
+        role
+  	  }
+    }
+  }
+`
