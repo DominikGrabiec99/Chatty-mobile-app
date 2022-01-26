@@ -7,10 +7,16 @@ import Room from './Room';
 import Loader from '../Loader';
 
 const RoomsContainer = () => {
-
   const [userRooms, setUserRooms] = useState([])
 
-  const {loading, error, data} = useQuery(GET_ROOMS)
+  const {loading, error, data, refetch} = useQuery(GET_ROOMS, 
+    {
+      fetchPolicy: 'no-cache'
+  })
+
+  useEffect(() => { 
+    refetch()
+  }, [])
 
   useEffect(() => {
     if(data) setUserRooms(data.usersRooms.rooms)
@@ -23,7 +29,7 @@ const RoomsContainer = () => {
         <Text style={styles.textInfoMessage}>
           An error has occurred with the database
         </Text>
-        </View>
+      </View>
     )
   }
   

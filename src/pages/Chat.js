@@ -1,28 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { useQuery} from '@apollo/client';
+import { useQuery, useSubscription} from '@apollo/client';
 import { GET_ROOMS_BY_ID } from '../GraphQL/Queries';
+import { MESSAGE_ADDED } from '../GraphQL/Subscription';
 
 import Header from '../components/room/Header';
 import ChatPanel from '../components/room/ChatPanel';
 
-const Chat = ({ route, navigation }) => {
-  const [room, setRoom] = useState({})
+const Chat = ({ route }) => {
   const [messages, setMessages] = useState([])
+  const [shouldRefresh, setShouldRefresh] = useState(false)
   const [userName, setUserName] = useState(null)
   const { id } = route.params;
 
-  const {loading, error, data} = useQuery(GET_ROOMS_BY_ID, {
-    variables:{id}
+  const {  data: dataSub, loading: loadingSub, error: errorSub } = useSubscription(MESSAGE_ADDED, {
+    variables: { roomId: id }
+  });
+
+  const {loading, error, data, refetch} = useQuery(GET_ROOMS_BY_ID, {
+    variables:{id},
+    fetchPolicy: 'no-cache'
   })
 
   useEffect(() => {
+    if(!dataSub) return
+    setMessages( prev => [dataSub.messageAdded, ...prev ] )
+  },[dataSub, errorSub, loadingSub])
+
+  useEffect(() => {
     if(data) {
-      setRoom(data.room)
       setMessages([...data.room.messages])
     }
   }, [data])
+
+  useEffect(() => { 
+    refetch()
+  }, [])
 
   useEffect(() => {
     if(messages.length === 0) return

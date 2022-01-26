@@ -8,7 +8,7 @@ import * as ROUTS from '../../constans/routs'
 
 const Header = ({userName}) => {
   const navigation = useNavigation(); 
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.headerTextBox}>

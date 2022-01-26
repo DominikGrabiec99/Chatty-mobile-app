@@ -2,13 +2,14 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import splitLink from './src/helpers/splitLink';
+// import splitLink from './src/helpers/splitLink';
+
+import link from './src/helpers/splitLink';
 
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
 import { ApolloClient, InMemoryCache, ApolloProvider,} from "@apollo/client";
-import { setContext } from '@apollo/client/link/context';
 
 import * as ROUTS from './src/constans/routs'
 
@@ -19,20 +20,8 @@ import Chat from './src/pages/Chat';
 
 const Stack = createNativeStackNavigator();
 
-
-const authLink = setContext((_, { headers }) => {
-  // const token = AsyncStorage.getItem('token');
-  const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJjaGF0bHkiLCJleHAiOjE2NDM4MDExNjcsImlhdCI6MTY0MTM4MTk2NywiaXNzIjoiY2hhdGx5IiwianRpIjoiN2MzNjFlY2UtM2ZlNC00NDU2LWJhMWUtOWQyMWQwOTI1ZjIzIiwibmJmIjoxNjQxMzgxOTY2LCJzdWIiOiIwNGJmODU1MS1lNjg3LTQ5YTUtYWZjYS0zMWViMmE1YTEyYzkiLCJ0eXAiOiJhY2Nlc3MifQ.Hvzck-vXPCfRB7G2fM9oelBXrWXhPSGw4Mo64WVZZYMxEMZwpVclrZb5qBZp75tr9LS-YjtaIsKoow7i8Pj5bA'
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    }
-  }
-});
-
 const client = new ApolloClient({
-  link: authLink.concat(splitLink),
+  link,
   cache: new InMemoryCache()
 });
 

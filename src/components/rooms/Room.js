@@ -11,39 +11,22 @@ import Loader from '../Loader';
 
 const Room = ({ id }) => {
   const [room, setRoom] = useState({})
+  const [time, setTime] = useState('')
   const navigation = useNavigation();
 
-  const {loading, error, data} = useQuery(GET_ROOMS_BY_ID, {
-    variables:{id}
+  const {loading, error, data, refetch} = useQuery(GET_ROOMS_BY_ID, {
+    variables:{id},
+    fetchPolicy: 'no-cache'
   })
-
-  useEffect(() => {
-    if(data) {
-      setRoom({name: data.room.name, time: data.room.messages[0].insertedAt, message: data.room.messages[0].body})
-    }
-  }, [data])
-
-  if(loading) {
-    return <Loader />
-  }
-
-  if(!data && !loading) {
-    return <View>
-      <Text>You don't have any room yet</Text>
-    </View>
-  }
 
   const createTime = () => {
     if(!room.time) return
-    const time = new Date(room.time.slice(0,4), room.time.slice(5,7), room.time.slice(8,10), room.time.slice(11,13), room.time.slice(14,16))
     const now = new Date()
-
+    const time = new Date(room.time.slice(0,4), Number(room.time.slice(5,7)-1), room.time.slice(8,10), room.time.slice(11,13), room.time.slice(14,16))
     const timeMess = (now.getTime()- time.getTime()) / (1000)
 
-    if(timeMess < 3){
+    if(timeMess < 60){
       return 'now'
-    } else if(timeMess < 60) {
-      return `${timeMess} s ago`
     } else if( (timeMess / 60) > 0 && (timeMess / 60) < 60) {
       const time = timeMess / 60
       return  `${time.toFixed(0)} m ago`
@@ -59,8 +42,47 @@ const Room = ({ id }) => {
     }
   }
 
+  useEffect(
+    () => {
+      const willFocusSubscription = navigation.addListener('focus', () => {
+        refetch()
+    })
+    return willFocusSubscription;
+  }, []);
+
+  useEffect(() => { 
+    refetch()
+  }, [])
+
+  useEffect(() => {
+    if(data) {
+      setRoom({name: data.room.name, time: data.room.messages[0].insertedAt, message: data.room.messages[0].body})
+    }
+  }, [data])
+
+  useEffect(()=> {
+    setTime(createTime())
+    let myInterval = setInterval(() => {
+      setTime(createTime())
+    }, 30000)
+    return ()=> {
+      clearInterval(myInterval);
+    } 
+  }, [data, room]);
+
+
+  if(loading) {
+    return <Loader />
+  }
+
+  if(!data && !loading) {
+    return <View>
+      <Text>You don't have any room yet</Text>
+    </View>
+  }
+
   return (
-  <TouchableOpacity style={styles.wrapperRoom} onPress={() => navigation.navigate(ROUTS.CHAT, {id: id})}>
+  <TouchableOpacity style={[styles.wrapperRoom, time === 'now' && {backgroundColor: '#5603AD'}]} onPress={() => navigation.navigate(ROUTS.CHAT, {id: id})}>
     <View>
       <Svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <Circle cx="32" cy="32" r="32" fill="#E9EAEE"/>
@@ -74,11 +96,11 @@ const Room = ({ id }) => {
       </Svg>
     </View>
     <View style={styles.roomInfo} >
-      <Text numberOfLines={1} style={styles.name}>{room.name}</Text>
-      <Text numberOfLines={1} style={styles.message}>{room.message}</Text>
+      <Text numberOfLines={1} style={[styles.name, time === 'now' && {color: '#FFFFFF'}]}>{room.name}</Text>
+      <Text numberOfLines={1} style={[styles.message , time === 'now' && {color: '#FFFFFF'}]}>{room.message}</Text>
     </View>
     <View style={styles.timeBox}>
-      { createTime() === 'now' ? <View style={styles.messNow}></View>: <Text style={styles.time}>{createTime()}</Text>} 
+      { time === 'now' ? <View style={styles.messNow}></View>: <Text style={styles.time}>{time}</Text>} 
     </View>
   </TouchableOpacity>
   )

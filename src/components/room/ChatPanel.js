@@ -3,7 +3,7 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { useMutation, useSubscription } from '@apollo/client';
 
 import { SEND_MESSAGE } from '../../GraphQL/Mutations';
-import {  MESSAGE_ADDED } from '../../GraphQL/Subscription';
+import { MESSAGE_ADDED } from '../../GraphQL/Subscription';
 
 import renderInputToolbar from './renderInputToolbar';
 import renderBubble from './renderBubble';
@@ -15,16 +15,6 @@ const ChatPanel = ({ allMessages, id, user }) => {
   const [messages, setMessages] = useState([]);
 
   const [sendMessage, { error }] = useMutation(SEND_MESSAGE)
-
-  const { error: errorSub, data, loading } = useSubscription(
-    MESSAGE_ADDED,
-    { variables: { roomId: id },
-      onSubscriptionData: (data) => {
-        const message = data.subscriptionData.data.messageCreated
-      }
-    }
-  )
-
 
   useEffect(() => {
     setMessages(allMessages.map(({id, body, insertedAt, user }) => ({
@@ -61,7 +51,6 @@ const ChatPanel = ({ allMessages, id, user }) => {
       alwaysShowSend
       renderSend={renderSend}
       minInputToolbarHeight={74}
-      isTyping={true}
       renderDay={renderDay}
       renderTime={renderTime}
       user={{

@@ -10,8 +10,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@absinthe/socket": "^0.2.1",
+    "@absinthe/socket-apollo-link": "^0.2.1",
     "@apollo/client": "^3.5.0",
     "@expo-google-fonts/inter": "^0.2.2",
+    "@jumpn/utils-graphql": "^0.6.0",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "expo": "~44.0.0",
@@ -19,6 +22,7 @@
     "expo-font": "~10.0.4",
     "expo-status-bar": "~1.2.0",
     "graphql": "^16.2.0",
+    "phoenix": "^1.6.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
