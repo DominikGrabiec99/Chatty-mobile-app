@@ -15,3 +15,15 @@ export const SEND_MESSAGE =gql`
     }
   }
 `
+
+export const SEND_TYPING =gql`
+  mutation typingUser($roomId: String!) {
+    typingUser(roomId: $roomId) {
+      email,
+    	firstName,
+    	lastName,
+    	id,
+    	role
+    }
+  }
+`

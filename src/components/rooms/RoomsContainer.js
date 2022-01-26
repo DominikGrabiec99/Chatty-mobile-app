@@ -17,7 +17,7 @@ const RoomsContainer = () => {
   useEffect(() => { 
     refetch()
   }, [])
-
+  
   useEffect(() => {
     if(data) setUserRooms(data.usersRooms.rooms)
   }, [data])

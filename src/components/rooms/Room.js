@@ -126,10 +126,12 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     letterSpacing: 0.01,
     fontWeight: '700',
-    fontFamily: 'poppins-regular'
+    fontFamily: 'poppins-regular',
+    color: '#1A1A1A'
   },
   message: {
     fontSize: 14,
+    color: '#1A1A1A'
   },
   messNow: {
     height: 10,

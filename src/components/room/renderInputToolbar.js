@@ -1,7 +1,6 @@
 import { Composer, InputToolbar} from 'react-native-gifted-chat';
-import { StyleSheet, TextInput } from 'react-native';
 
-const renderInputToolbar = props => {
+const renderInputToolbar = (props, isFocus) => {
   return (
     <InputToolbar
       {...props}
@@ -17,23 +16,19 @@ const renderInputToolbar = props => {
       }}
       placeholder=""
       renderComposer={props => (
-      <Composer {...props} textInputStyle={{
-        color: '#1A1A1A', 
-        backgroundColor: '#FFFFFF',
-        borderRadius: 12,
-        borderBottomRightRadius: 0,
-        width: 30,
-        padding: 10
-      }}/>
+      <Composer {...props} 
+        textInputStyle={[{
+          color: '#1A1A1A', 
+          backgroundColor: '#FFFFFF',
+          borderRadius: 12,
+          borderBottomRightRadius: 0,
+          width: 30,
+          padding: 10
+        }, isFocus && {borderColor: '#5603AD',  borderWidth: 3}]}
+      />
       )}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-
-  }
-})
 
 export default renderInputToolbar

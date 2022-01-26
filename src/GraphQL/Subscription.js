@@ -16,3 +16,15 @@ export const MESSAGE_ADDED = gql`
     }
   }
 `
+
+export const TYPING_USER = gql`
+   subscription messageAdded($roomId: String!) {
+    typingUser(roomId: $roomId) {
+      email,
+      firstName,
+      id,
+      lastName,
+      role
+    }
+  }
+`
