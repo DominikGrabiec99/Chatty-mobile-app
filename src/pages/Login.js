@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import Header from '../components/login/Header';
 import InformationText from '../components/login/InformationText';
 import FormPanel from '../components/login/FormPanel';
-import SignUpNav from '../components/login/SignUpNav';
 
 const Login = () => {
     return (
@@ -11,7 +10,6 @@ const Login = () => {
       <Header />
       <InformationText />
       <FormPanel />
-      <SignUpNav />
     </ View>
   )
 };

@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import * as ROUTS from '../../constans/routs'
 
-const LiginNav = () => {
+const LoginNav = () => {
   const navigation = useNavigation();
 
   return (
