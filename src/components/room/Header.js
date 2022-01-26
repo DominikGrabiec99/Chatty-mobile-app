@@ -33,7 +33,7 @@ const Header = ({userName}) => {
           </Svg>
         </View>
         <View style={styles.textBox}>
-          <Text style={styles.text}>{userName}</Text>
+          <Text style={styles.text}>{userName ? userName: 'User Name'}</Text>
           <Text style={styles.textActive}>Active now</Text>
         </View>
       </View>
