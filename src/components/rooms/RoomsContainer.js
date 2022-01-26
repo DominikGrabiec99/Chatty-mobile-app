@@ -37,7 +37,19 @@ const RoomsContainer = () => {
     return <Loader />
   }
 
+  
+
   if(!data && userRooms.length === 0 && !loading) {
+    return(
+      <View style={styles.infoMessage}>
+        <Text style={styles.textInfoMessage}>
+          You don't have any room yet
+        </Text>
+      </View>
+    )
+  }
+
+  if(userRooms.length === 0 && !loading) {
     return(
       <View style={styles.infoMessage}>
         <Text style={styles.textInfoMessage}>
@@ -62,6 +74,7 @@ const styles = StyleSheet.create({
   infoMessage: {
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 1
   },
   textInfoMessage: {
     fontSize: 22,

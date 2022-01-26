@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-// import splitLink from './src/helpers/splitLink';
-
-import link from './src/helpers/splitLink';
-
+import { ApolloClient, InMemoryCache, ApolloProvider,} from "@apollo/client";
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import * as SecureStore from 'expo-secure-store';
 
-import { ApolloClient, InMemoryCache, ApolloProvider,} from "@apollo/client";
+import link from './src/helpers/splitLink';
 
 import * as ROUTS from './src/constans/routs'
 
@@ -25,7 +22,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-function App() {
+const App = () =>  {
+  const [isToken, setIsToken] = useState(null)
 
   const [fontsLoaded] = useFonts({
     'poppins-regular': require('./assets/fonts/Poppins-Regular.ttf'),
@@ -34,6 +32,12 @@ function App() {
     'poppies-semiBold': require('./assets/fonts/Poppins-SemiBold.ttf')
   });
 
+  useEffect(async () => {
+    const token = await SecureStore.getItemAsync('secure_token').then((data) => {
+      setIsToken(data)
+    })
+   }, [])
+
   if (fontsLoaded) {
     return (
       <ApolloProvider client={client}>
@@ -41,8 +45,17 @@ function App() {
           <Stack.Navigator screenOptions={{
             headerShown: false
           }}>
-            <Stack.Screen name={ROUTS.LOGIN} component={Login} />
-            <Stack.Screen name={ROUTS.ROOMS} component={Rooms} />
+            {isToken ? (
+              <>
+                <Stack.Screen name={ROUTS.ROOMS} component={Rooms} />
+                <Stack.Screen name={ROUTS.LOGIN} component={Login} />
+              </>
+            ) : (
+              <>
+               <Stack.Screen name={ROUTS.LOGIN} component={Login} />
+                <Stack.Screen name={ROUTS.ROOMS} component={Rooms} />
+              </>
+            )}
             <Stack.Screen name={ROUTS.REGISTRATION} component={Signup} />
             <Stack.Screen name={ROUTS.CHAT} component={Chat} />
           </Stack.Navigator>
