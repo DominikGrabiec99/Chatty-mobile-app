@@ -17,8 +17,9 @@ import { useNavigation } from '@react-navigation/native';
 const FormPanel = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
-  const [isError, serIsError]= useState(false);
+  const [isError, setIsError]= useState(false);
   const [notSeePassword, notSetSeePassword] = useState(true);
 
   const [isFocusedEmail, setIsFocusedEmail] = useState(false);
@@ -31,22 +32,31 @@ const FormPanel = () => {
   useEffect(() => {
     setIsFocusedEmail(false)
     setIsFocusedPass(false)
+    setMessage('')
+    setPassword('')
+    setEmail('')
+    setIsError(false)
   }, [])
 
   useEffect(() => {
     if(email.includes(' ')) {
-      serIsError(true)
+      setMessage('Invalid email')
+      setIsError(true)
       return null
     } else {
-      serIsError(false)
+      setMessage('')
+      setIsError(false)
     }
   }, [email])
 
   const handleOnSubmit = async () => {
     
     if(email.length === 0 || password.length === 0) {
+      setMessage('Invalid email or passwor')
       return null
     }
+
+    setMessage('')
 
     await loginSend({
       variables: {
@@ -58,7 +68,7 @@ const FormPanel = () => {
       await SecureStore.setItemAsync('secure_token', data.data.loginUser.token);
       navigation.navigate(ROUTS.ROOMS)
     }).catch((e) => {
-      //message
+      setMessage('Something go wrong!')
       console.log(e)
     })
   }
@@ -103,6 +113,11 @@ const FormPanel = () => {
             </View>
           </View>
         </View>
+        {message !== '' && 
+          <View>
+            <Text style={styles.messError}>{message}</Text>
+          </View>
+        }
         <TouchableOpacity style={styles.button} onPress={handleOnSubmit}>
           <Text style={styles.buttonText}>Log in</Text>
         </TouchableOpacity>
@@ -158,6 +173,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'poppies-semiBold',
     letterSpacing: 0.1
+  },
+  messError: {
+    color: '#FF445A',
+    textAlign: 'center'
   }
 });
 

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
+import { useMutation } from '@apollo/client';
 import Svg, { Path} from 'react-native-svg';
 
 import * as ROUTS from '../../constans/routs'
+
+import { REGISTER } from '../../GraphQL/Mutations'
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -17,8 +20,9 @@ const FormPanel = () => {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConf, setPasswordConf] = useState('');
+  const [message, setMessage] = useState('');
 
-  const [isErrorEmial, serIsErrorEmial]= useState(false);
+  const [isErrorEmial, setIsErrorEmial]= useState(false);
 
   const [notSeePassword, notSetSeePassword] = useState(true);
   const [notSeePasswordConf, notSetSeePasswordConf] = useState(true);
@@ -31,25 +35,92 @@ const FormPanel = () => {
 
   const navigation = useNavigation();
 
+   const [registerSend, { error: lregisterError, data: registerLogin }] = useMutation(REGISTER)
+
   useEffect(() => {
     setIsFocusedEmail(false)
     setIsFocusedFirstName(false)
     setIsFocusedLastName(false)
     setIsFocusedPassword(false)
     setIsFocusedPasswordConf(false)
+    setEmail('')
+    setFirstName('')
+    setLastName('')
+    setPassword('')
+    setPasswordConf('')
+    setMessage('')
   }, [])
 
   useEffect(() => {
     if(email.includes(' ')) {
-      serIsErrorEmial(true)
+      setMessage('Invalid email')
+      setIsErrorEmial(true)
       return null
     } else {
-      serIsErrorEmial(false)
+      setMessage('')
+      setIsErrorEmial(false)
     }
   }, [isErrorEmial])
 
-  const handleOnSubmit = () => {
-    navigation.navigate(ROUTS.LOGIN)
+  const handleOnSubmit = async () => {
+
+    if(email.length === 0 || !email.includes('@')) {
+      setMessage('Invalid email')
+      return null
+    }
+
+    if(password.length === 0) {
+      setMessage('Invalid password')
+      return null
+    }
+
+    if(password.length < 8) {
+      setMessage('Password should be at least 8 character(s)')
+      return null
+    }
+
+    if(passwordConf.length === 0 ) {
+      setMessage('Invalid password confirmation')
+      return null
+    }
+
+     if(passwordConf.length < 8 ) {
+      setMessage('Password confirmation should be at least 8 character(s)')
+      return null
+    }
+    
+    if(password !== passwordConf) {
+      setMessage('Passwor is not the same')
+      return null
+    }
+
+    if(lastName.length === 0) {
+      setMessage('Invalid last name')
+      return null
+    }
+
+    if(firstName.length === 0) {
+      setMessage('Invalid first name')
+      return null
+    }
+
+    setMessage('')
+
+    await registerSend({
+      variables: {
+        email,
+        firstName,
+        lastName,
+        passwordConfirmation: passwordConf,
+        password
+      },
+      fetchPolicy: 'no-cache'
+    }).then( async (data) => {
+      navigation.navigate(ROUTS.LOGIN)
+    }).catch((e) => {
+      setMessage('Something go wrong!')
+      console.log(e)
+    })
   }
 
   return (
@@ -137,6 +208,11 @@ const FormPanel = () => {
             </View>
           </View>
         </View>
+        {message !== '' && 
+          <View>
+            <Text style={styles.messError}>{message}</Text>
+          </View>
+        }
         <TouchableOpacity style={styles.button} onPress={handleOnSubmit}>
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
@@ -169,7 +245,7 @@ const styles = StyleSheet.create({
     fontFamily: 'poppies-midium'
   },
   inputPassBox: {
-    // marginTop: 25,
+    
   },
   inputSvgBox: {
     position: 'relative'
@@ -197,6 +273,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'poppies-semiBold',
     letterSpacing: 0.1
+  },
+   messError: {
+    color: '#FF445A',
+    textAlign: 'center'
   }
 });
 
