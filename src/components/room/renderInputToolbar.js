@@ -10,7 +10,7 @@ const renderInputToolbar = (props, isFocus) => {
         borderTopLeftRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: 20,
+        paddingBottom: 16,
         paddingTop: 10,
         paddingHorizontal: 10
       }}

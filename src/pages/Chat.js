@@ -7,11 +7,14 @@ import { MESSAGE_ADDED } from '../GraphQL/Subscription';
 
 import Header from '../components/room/Header';
 import ChatPanel from '../components/room/ChatPanel';
+import Line from '../components/room/Line'
+import Loader from '../components/Loader'
 
 const Chat = ({ route }) => {
   const [messages, setMessages] = useState([])
-  const [shouldRefresh, setShouldRefresh] = useState(false)
   const [userName, setUserName] = useState(null)
+  const [isFocus, setIsFocus] = useState(false);
+
   const { id } = route.params;
 
   const {  data: dataSub, loading: loadingSub, error: errorSub } = useSubscription(MESSAGE_ADDED, {
@@ -50,14 +53,19 @@ const Chat = ({ route }) => {
     })
   }, [messages])
 
-   if(!data) {
+    if(loading) {
+      return <Loader />
+    }
+
+  if(!data) {
     return <View></View>
   }
-  
+
   return (
     <View style={styles.container}>
       <Header userName={userName}/>
-      <ChatPanel allMessages={messages} id={id} user={data.room.user}/>
+      <ChatPanel allMessages={messages} id={id} user={data.room.user} isFocus={isFocus} setIsFocus={setIsFocus}/>
+      {!isFocus && <Line /> }
     </ View>
   )
 };

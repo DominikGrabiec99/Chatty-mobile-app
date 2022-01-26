@@ -11,10 +11,10 @@ import renderSend from './renderSend';
 import renderTime from './renderTime';
 import renderDay from './renderDay';
 
-const ChatPanel = ({ allMessages, id, user }) => {
+const ChatPanel = ({ allMessages, id, user, isFocus, setIsFocus }) => {
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
-  const [isFocus, setIsFocus] = useState(false);
+
 
   const [sendMessage, { error }] = useMutation(SEND_MESSAGE)
   const [sendTyping, { error: typingError }] = useMutation(SEND_TYPING)
@@ -78,7 +78,7 @@ const ChatPanel = ({ allMessages, id, user }) => {
       renderBubble={renderBubble}
       alwaysShowSend
       renderSend={renderSend}
-      minInputToolbarHeight={74}
+      minInputToolbarHeight={68}
       renderDay={renderDay}
       renderTime={renderTime}
       isTyping={isTyping}

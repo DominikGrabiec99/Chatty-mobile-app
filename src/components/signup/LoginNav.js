@@ -18,7 +18,7 @@ const styles =  StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 30
+    marginTop: 15
   },
   text: {
     color: '#FFFFFF',

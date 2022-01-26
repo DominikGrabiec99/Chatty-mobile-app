@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 12,
     paddingVertical: 10,
-    marginTop: 40
+    marginTop: 30
   },
   buttonText: {
     color: '#FFFFFF',
