@@ -70,7 +70,7 @@ const Room = ({ id }) => {
     if(data && dataSub) {
       setRoom({name: data.room.name, time: dataSub.messageAdded.insertedAt, message: dataSub.messageAdded.body})
     }
-  }, [dataSub])
+  }, [dataSub, loadingSub, errorSub])
 
   useEffect(()=> {
     setTime(createTime())
@@ -94,7 +94,7 @@ const Room = ({ id }) => {
   }
 
   return (
-  <TouchableOpacity style={[styles.wrapperRoom, time === 'now' && {backgroundColor: '#5603AD'}]} onPress={() => navigation.navigate(ROUTS.CHAT, {id: id})}>
+  <TouchableOpacity style={[styles.wrapperRoom, (dataSub && dataSub.messageAdded.user.id !== data.room.user.id) && {backgroundColor: '#5603AD'}]} onPress={() => navigation.navigate(ROUTS.CHAT, {id: id})}>
     <View>
       <Svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <Circle cx="32" cy="32" r="32" fill="#E9EAEE"/>
@@ -108,8 +108,8 @@ const Room = ({ id }) => {
       </Svg>
     </View>
     <View style={styles.roomInfo} >
-      <Text numberOfLines={1} style={[styles.name, time === 'now' && {color: '#FFFFFF'}]}>{room.name}</Text>
-      <Text numberOfLines={1} style={[styles.message , time === 'now' && {color: '#FFFFFF'}]}>{room.message}</Text>
+      <Text numberOfLines={1} style={[styles.name, (dataSub && dataSub.messageAdded.user.id !== data.room.user.id) && {color: '#FFFFFF'}]}>{room.name}</Text>
+      <Text numberOfLines={1} style={[styles.message , (dataSub && dataSub.messageAdded.user.id !== data.room.user.id) && {color: '#FFFFFF'}]}>{room.message}</Text>
     </View>
     <View style={styles.timeBox}>
       { time === 'now' ? <View style={styles.messNow}></View>: <Text style={styles.time}>{time}</Text>} 
