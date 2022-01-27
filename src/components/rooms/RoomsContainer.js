@@ -37,8 +37,6 @@ const RoomsContainer = () => {
     return <Loader />
   }
 
-  
-
   if(!data && userRooms.length === 0 && !loading) {
     return(
       <View style={styles.infoMessage}>
